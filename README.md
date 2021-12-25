@@ -52,11 +52,13 @@ void draw(){
 
   // Call clear at the beginning of each frame
   fbo.clear();
+
+  // Do our drawing
   background(0, 255, 0);
   push();
-  rotateX(frameCount * 0.01);
-  fill(255, 0, 0);
-  box(100);
+    rotateX(frameCount * 0.01);
+    fill(255, 0, 0);
+    box(100);
   pop();
 
   // We're done drawing into the fbo so call .end()
@@ -119,6 +121,15 @@ returns the p5.Texture that the framebuffer is rendering into.
 4. I'm fairly certain that rendering might break if you create a fbo that isn't the same aspect ratio as your main canvas. I haven't tested it yet, but my hunch is that you will need to update the projection matrix aspect ratio in order to fix this.
 
 5. I also haven't tested it with p5.Graphics objects, but I think this should work. Feel free to file an issue if not.
+
+## Todo list
+
+- [ ] Ensure that p5Fbo works with p5.Graphics objects
+- [ ] Ensure that p5Fbo can properly update the projectmation matrix when the aspect of the fbo doesn't match the aspect of the base canvas.
+- [ ] Get float textures working
+- [ ] Figure out how to draw textures to the screen using the image() or texture() functions.
+- [ ] Test performance
+- [ ] Test that many fbo's can be created at once
 
 ## Credits
 
