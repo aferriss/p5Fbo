@@ -1,5 +1,7 @@
 # p5Fbo
 
+![p5Fbo demo](p5Fbo-demo.gif)
+
 p5Fbo is an extension to p5 that allows you to use framebuffer objects. Framebuffers allow us to do our rendering into a webGL texture instead of directly to the screen in a canvas.
 
 This project is very much a work in progress.
