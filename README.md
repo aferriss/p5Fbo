@@ -120,6 +120,8 @@ returns the p5.Texture that the framebuffer is rendering into.
 
 2. The rendering format is set to RGBA Unsigned Byte. It should be possible to do float textures, but I haven't looked into it yet.
 
+3. Some things might be funky if you call scale or translate, I need to do more testing.
+
 ## Todo list
 
 - [ ] Get float textures working
