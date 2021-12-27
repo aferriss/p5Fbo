@@ -1,3 +1,4 @@
+
 class p5Fbo {
 	constructor({
 		renderer,
@@ -18,6 +19,8 @@ class p5Fbo {
 
 		this.texture.setInterpolation(interpolationMode, interpolationMode);
 		this.texture.setWrapMode(wrapMode);
+
+		this.originalProjectionMatrix = this.renderer.uPMatrix.copy();
 
 		// define size and format of level 0
 		const level = 0;
@@ -74,6 +77,9 @@ class p5Fbo {
 
 		// Tell WebGL how to convert from clip space to pixels
 		gl.viewport(0, 0, this.width, this.height);
+
+		// set projection matrix to size of fbo texture
+		perspective(PI / 3.0, this.width / this.height, 0.1, 500);
 	}
 
 	// Call to clear the depth and color buffers
@@ -97,6 +103,10 @@ class p5Fbo {
 		gl.bindTexture(gl.TEXTURE_2D, null);
 		gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
 		resetShader();
+
+		// Restore original projection matrix
+		// To do this right...I should probably figure out how to extract the FOV from the original pMatrix
+		perspective(PI / 3.0, width / height, 0.1, 500);
 	}
 
 	getTexture() {

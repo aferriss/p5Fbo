@@ -86,7 +86,7 @@ const fbo = new p5Fbo({renderer, width, height, interpolationMode, wrapMode});
 
 ### Constructor settings
 
-- renderer: The p5 renderer. 
+- renderer: The p5 renderer.
   - For the base canvas, this will be what is returned from createCanvas. `const canvas = createGraphics(100, 100, WEBGL)`
   - For p5.Graphics objects, this will be the `._renderer` property returned from createGraphics.
     - `const graphics = createGraphics(100, 100, WEBGL);`
@@ -104,6 +104,8 @@ Tells p5 to start rendering into the framebuffer. Call this before you before yo
 
 Simliar to the default clear function. This clears the color and depth of the fbo. The RGBA arguments are optional, but if omitted will default to 0.
 
+I will deprecate this function once [#5515](https://github.com/processing/p5.js/pull/5515) lands.
+
 ### `p5Fbo.end()`
 
 Tells p5 to stop rendering into the framebuffer. It's very important to remember to call this function, otherwise p5 will keep rendering into the framebuffer, and you'll get weird results on screen.
@@ -116,22 +118,12 @@ returns the p5.Texture that the framebuffer is rendering into.
 
 1. There is an issue with p5 where you can't pass textures to shaders directly. I've [submitted a PR to fix this](https://github.com/processing/p5.js/pull/5517), but in the meantime, **you will need to use the pre-built p5.js library in this repo**.
 
-2. Currently, the only way to draw the results of the fbo is by using a custom shader. I've provided and example in the repo so you can see how this is done. Hopefully I can figure out a way to draw a p5.Texture using the image() or texture() functions.
-
-3. The rendering format is set to RGBA Unsigned Byte. It should be possible to do float textures, but I haven't looked into it yet.
-
-4. I'm fairly certain that rendering might break if you create a fbo that isn't the same aspect ratio as your main canvas. I haven't tested it yet, but my hunch is that you will need to update the projection matrix aspect ratio in order to fix this.
-
-5. I also haven't tested it with p5.Graphics objects, but I think this should work. Feel free to file an issue if not.
+2. The rendering format is set to RGBA Unsigned Byte. It should be possible to do float textures, but I haven't looked into it yet.
 
 ## Todo list
 
-- [ ] Ensure that p5Fbo works with p5.Graphics objects
-- [ ] Ensure that p5Fbo can properly update the projectmation matrix when the aspect of the fbo doesn't match the aspect of the base canvas.
 - [ ] Get float textures working
-- [ ] Figure out how to draw textures to the screen using the image() or texture() functions.
 - [ ] Test performance
-- [ ] Test that many fbo's can be created at once
 
 ## Credits
 
