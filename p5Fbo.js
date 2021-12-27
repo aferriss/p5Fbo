@@ -62,6 +62,10 @@ class p5Fbo {
 	// Call this function whenever you want to start rendering into your fbo
 	begin() {
 		const gl = this.gl;
+
+		// This is necessary to prevent p5 from using the wrong shader
+		this.renderer._tex = null;
+
 		// render to our targetTexture by binding the framebuffer
 		gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
 
@@ -73,6 +77,7 @@ class p5Fbo {
 	}
 
 	// Call to clear the depth and color buffers
+	// Remove this once https://github.com/processing/p5.js/pull/5515 lands
 	clear(...args) {
 		const gl = this.gl;
 		const r = args[0] || 0;
