@@ -118,4 +118,14 @@ class p5Fbo {
 	getTexture() {
 		return this.texture;
 	}
+
+	// Copies this framebuffer to another
+	copyTo(dst) {
+		const gl = this.gl;
+		gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+		gl.bindTexture(gl.TEXTURE_2D, dst.texture.glTex);
+		gl.copyTexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 0, 0, dst.width, dst.height, 0);
+		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+	}
+
 }
