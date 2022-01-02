@@ -80,10 +80,10 @@ class p5Fbo {
 		gl.viewport(0, 0, this.width, this.height);
 
 		// set projection matrix to size of fbo texture
-		perspective(PI / 3.0, this.width / this.height, 0.1, 500);
+		// perspective(PI / 3.0, this.width / this.height, 0.1, 500);
 
 		// Not 100% about this but I think it's necessary to get the scale of things looking correct
-		this.renderer.uMVMatrix.scale(gl.drawingBufferWidth / this.width, -gl.drawingBufferHeight / this.height, 1);
+		// this.renderer.uMVMatrix.scale(gl.drawingBufferWidth / this.width, -gl.drawingBufferHeight / this.height, 1);
 	}
 
 	// Call to clear the depth and color buffers
@@ -110,9 +110,9 @@ class p5Fbo {
 
 		// Restore original projection matrix
 		// To do this right...I should probably figure out how to extract the FOV from the original pMatrix
-		perspective(PI / 3.0, width / height, 0.1, 500);
+		// perspective(PI / 3.0, width / height, 0.1, 500);
 
-		this.renderer.uMVMatrix = this.originalModelViewMatrix;
+		// this.renderer.uMVMatrix = this.originalModelViewMatrix;
 	}
 
 	getTexture() {
