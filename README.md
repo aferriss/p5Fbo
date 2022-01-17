@@ -69,12 +69,7 @@ void draw(){
   fbo.end();
 
   // Now we need to draw the fbo to the screen. 
-  // One limitation of the library at the moment, is that you can only draw fbo textures to the screen using a shader
-
-  shader(myShader);
-  // Send the fbo texture to the shader. We do this with .getTexture()
-  myShader.setUniform('tex0', fbo.getTexture());
-  rect(-width/2, -height/2, width, height);
+  fbo.draw();
 }
 ```
 
