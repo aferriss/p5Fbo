@@ -132,20 +132,6 @@ class p5Fbo {
 
 	}
 
-	// Call to clear the depth and color buffers
-	// Remove this once https://github.com/processing/p5.js/pull/5515 lands
-	clear(...args) {
-		const gl = this.gl;
-		const r = args[0] || 0;
-		const g = args[1] || 0;
-		const b = args[2] || 0;
-		const a = args[3] || 0;
-
-		gl.clearColor(r, g, b, a);
-		gl.clearDepth(1);
-		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-	}
-
 	// Call end once you've done all your render. Super important to do this!
 	end() {
 		const gl = this.gl;

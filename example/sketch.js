@@ -79,7 +79,7 @@ function draw() {
     fbo.begin();
 
     // Clear it out before we draw anything
-    fbo.clear(0, 0, 0, 1);
+    clear(0, 0, 0, 1);
 
     // Render a rotating box with random b&w colors on it
     noStroke();

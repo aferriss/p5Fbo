@@ -100,12 +100,6 @@ const fbo = new p5Fbo({renderer, width, height, interpolationMode, wrapMode});
 
 Tells p5 to start rendering into the framebuffer. Call this before you before you want to use the fbo.
 
-### `pFbo.clear(r, g, b, a)`
-
-Simliar to the default clear function. This clears the color and depth of the fbo. The RGBA arguments are optional, but if omitted will default to 0.
-
-I will deprecate this function once [#5515](https://github.com/processing/p5.js/pull/5515) lands.
-
 ### `p5Fbo.end()`
 
 Tells p5 to stop rendering into the framebuffer. It's very important to remember to call this function, otherwise p5 will keep rendering into the framebuffer, and you'll get weird results on screen.
@@ -114,18 +108,23 @@ Tells p5 to stop rendering into the framebuffer. It's very important to remember
 
 returns the p5.Texture that the framebuffer is rendering into.
 
+### `p5Fbo.copyTo(dstFbo)`
+
+Copies contents of one fbo to another.
+Example: `fboA.copyTo(fboB);`.
+
 ## Limitations
 
-1. There is an issue with p5 where you can't pass textures to shaders directly. I've [submitted a PR to fix this](https://github.com/processing/p5.js/pull/5517), but in the meantime, **you will need to use the pre-built p5.js library in this repo**.
+1. Many changes that enable p5Fbo to work properly were only added recently, and aren't included in any p5 releases yet. You will need to use the custom built p5.js or p5.min.js libraries in this repo, or build p5 yourself from source.
 
 2. The rendering format is set to RGBA Unsigned Byte. It should be possible to do float textures, but I haven't looked into it yet.
 
-3. Some things might be funky if you call scale or translate, I need to do more testing.
+3. I haven't tested if this works with custom cameras yet. 
 
 ## Todo list
 
-- [ ] Get float textures working
-- [ ] Test performance
+- [ ] Check that custom cameras work
+- [ ] Float textures (partially implemented, but depends on some changes to p5)
 
 ## Credits
 
