@@ -61,12 +61,20 @@ class p5Fbo {
 
 		// Bind back to null
 		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+
+
+		this.defaultCamera = this.renderer._curCamera;
+
+		// console.log(this.renderer.pop);
+		// this.fboCamera = createCamera()
+		// this.fboCamera.perspective(this.defaultCamera.defaultCameraFOV, this.width / this.height, 0.1, 500);
+		// console.log(this.defaultCamera);
+		// setCamera(this.defaultCamera);
 	}
 
 	// Call this function whenever you want to start rendering into your fbo
 	begin() {
 		const gl = this.gl;
-
 		// This is necessary to prevent p5 from using the wrong shader
 		this.renderer._tex = null;
 
@@ -79,11 +87,49 @@ class p5Fbo {
 		// Tell WebGL how to convert from clip space to pixels
 		gl.viewport(0, 0, this.width, this.height);
 
-		// set projection matrix to size of fbo texture
-		// perspective(PI / 3.0, this.width / this.height, 0.1, 500);
+		this.renderer._pInst.push();
 
-		// Not 100% about this but I think it's necessary to get the scale of things looking correct
-		// this.renderer.uMVMatrix.scale(gl.drawingBufferWidth / this.width, -gl.drawingBufferHeight / this.height, 1);
+		// set projection matrix to size of fbo texture
+		this.computeCameraSettings();
+
+
+		// Flip scale
+		// By default in webGL fbo's are rendered upside down on the y axis
+		scale(1, -1);
+	}
+
+	// Updates camera to the correct aspect and size
+	computeCameraSettings() {
+		this.renderer._curCamera.defaultCameraFOV = 60 / 180 * Math.PI;
+		this.renderer._curCamera.defaultAspectRatio = this.width / this.height;
+		this.renderer._curCamera.defaultEyeX = 0;
+		this.renderer._curCamera.defaultEyeY = 0;
+		this.renderer._curCamera.defaultEyeZ = this.height / 2.0 / Math.tan(this.renderer._curCamera.defaultCameraFOV / 2.0);
+		this.renderer._curCamera.defaultCenterX = 0;
+		this.renderer._curCamera.defaultCenterY = 0;
+		this.renderer._curCamera.defaultCenterZ = 0;
+		this.renderer._curCamera.defaultCameraNear = this.renderer._curCamera.defaultEyeZ * 0.1;
+		this.renderer._curCamera.defaultCameraFar = this.renderer._curCamera.defaultEyeZ * 10;
+
+		this.cameraFOV = this.renderer._curCamera.defaultCameraFOV;
+		this.aspectRatio = this.renderer._curCamera.defaultAspectRatio;
+		this.eyeX = this.renderer._curCamera.defaultEyeX;
+		this.eyeY = this.renderer._curCamera.defaultEyeY;
+		this.eyeZ = this.renderer._curCamera.defaultEyeZ;
+		this.centerX = this.renderer._curCamera.defaultCenterX;
+		this.centerY = this.renderer._curCamera.defaultCenterY;
+		this.centerZ = this.renderer._curCamera.defaultCenterZ;
+		this.upX = 0;
+		this.upY = 1;
+		this.upZ = 0;
+		this.cameraNear = this.renderer._curCamera.defaultCameraNear;
+		this.cameraFar = this.renderer._curCamera.defaultCameraFar;
+
+		this.renderer._curCamera.perspective();
+		this.renderer._curCamera.camera();
+
+		this.cameraType = 'default';
+
 	}
 
 	// Call to clear the depth and color buffers
@@ -109,10 +155,11 @@ class p5Fbo {
 		resetShader();
 
 		// Restore original projection matrix
-		// To do this right...I should probably figure out how to extract the FOV from the original pMatrix
-		// perspective(PI / 3.0, width / height, 0.1, 500);
+		this.renderer._curCamera._computeCameraDefaultSettings();
+		this.renderer._curCamera._setDefaultCamera();
 
-		// this.renderer.uMVMatrix = this.originalModelViewMatrix;
+		this.renderer._pInst.pop();
+
 	}
 
 	getTexture() {
