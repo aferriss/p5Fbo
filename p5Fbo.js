@@ -5,7 +5,8 @@ class p5Fbo {
 		width,
 		height,
 		interpolationMode = LINEAR,
-		wrapMode = CLAMP
+		wrapMode = CLAMP,
+		floatTexture = false
 	} = {}) {
 		this.width = width;
 		this.height = height;
@@ -15,7 +16,7 @@ class p5Fbo {
 
 		// Create and bind texture
 		let im = new p5.Image(this.width, this.height);
-		this.texture = new p5.Texture(this.renderer, im);
+		this.texture = new p5.Texture(this.renderer, im, { dataType: floatTexture ? gl.FLOAT : gl.UNSIGNED_BYTE });
 
 		this.texture.setInterpolation(interpolationMode, interpolationMode);
 		this.texture.setWrapMode(wrapMode);
