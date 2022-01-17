@@ -14,6 +14,8 @@ Framebuffers allow us to get around this limitation. Now we can have as many off
 
 Framebuffers are potentially faster as well. I haven't done any bench marking yet, but I have a hunch that using frame buffers will be much more performant than using `createGraphics();`.
 
+Syntactically cleaner (imo). It's nice to not have to prefix all of your graphics calls with `graphics.`.
+
 ## Installation
 
 Just add the p5.js library, as well as the p5Fbo.js library somewher in your html file.
