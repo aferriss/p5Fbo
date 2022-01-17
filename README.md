@@ -53,7 +53,7 @@ void draw(){
   fbo.begin();
 
   // Call clear at the beginning of each frame
-  fbo.clear();
+  clear();
 
   // Do our drawing
   background(0, 255, 0);
