@@ -113,17 +113,28 @@ returns the p5.Texture that the framebuffer is rendering into.
 Copies contents of one fbo to another.
 Example: `fboA.copyTo(fboB);`.
 
+### `p5Fbo.draw(x, y, w, h)`
+
+A convenience method to draw the FBO to the screen at a given x, y, width, and height. This also flips the FBO vertically on the Y axis, to correct the inversion that FBO's do by default.
+
+### `p5Fbo.draw()`
+
+Draws the fbo to the screen at the same size as your canvas.
+
 ## Limitations
 
 1. Many changes that enable p5Fbo to work properly were only added recently, and aren't included in any p5 releases yet. You will need to use the custom built p5.js or p5.min.js libraries in this repo, or build p5 yourself from source.
 
 2. The rendering format is set to RGBA Unsigned Byte. It should be possible to do float textures, but I haven't looked into it yet.
 
-3. I haven't tested if this works with custom cameras yet. 
+3. I haven't tested if this works with all of the custom camera functions. I think if you put the camera function calls **after** `fbo.begin()` they may work.
+
+4. WebGL1 (which p5 uses) does not support multisampling, so your graphics may be a little more jagged than with default rendering. One solution is to render at 2x resolution, and then scale down when you draw. Or you can try to implement a post processing anti-aliasign shader like FXAA.
+
+5. Fbo's render with the y axis flipped by default. When you go to draw the texture, you'll need to unflip it `scale(1, -1)`, unless you use the `.draw()` method in p5Fbo.
 
 ## Todo list
 
-- [ ] Check that custom cameras work
 - [ ] Float textures (partially implemented, but depends on some changes to p5)
 
 ## Credits

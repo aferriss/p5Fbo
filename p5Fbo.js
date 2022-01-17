@@ -91,11 +91,6 @@ class p5Fbo {
 
 		// set projection matrix to size of fbo texture
 		this.computeCameraSettings();
-
-
-		// Flip scale
-		// By default in webGL fbo's are rendered upside down on the y axis
-		scale(1, -1);
 	}
 
 	// Updates camera to the correct aspect and size
@@ -160,5 +155,22 @@ class p5Fbo {
 		gl.copyTexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 0, 0, dst.width, dst.height, 0);
 		gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 	}
+
+	// Draw at a given x, y, width, and height.
+	// You can call without any parameters to draw the fbo at full screen size
+	draw(x, y, w, h) {
+		x = x || 0;
+		y = y || 0;
+		w = w || width;
+		h = h || height;
+
+		push();
+		translate(x, y);
+		scale(1, -1);
+		texture(this.texture);
+		plane(w, h);
+		pop();
+	}
+
 
 }
