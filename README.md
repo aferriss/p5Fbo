@@ -92,6 +92,7 @@ const fbo = new p5Fbo({renderer, width, height, interpolationMode, wrapMode});
 - height: the height of the fbo render texture
 - interpolationMode: (optional) either LINEAR or NEAREST. defaults to LINEAR
 - wrapMode: (optional) either CLAMP, REPEAT, or MIRROR. defaults to CLAMP
+- floatTexture: (optional) either true or false. defaults to false 
 
 ### `p5Fbo.begin()`
 
@@ -120,19 +121,15 @@ Draws the fbo to the screen at the same size as your canvas.
 
 ## Limitations
 
-1. Many changes that enable p5Fbo to work properly were only added recently, and aren't included in any p5 releases yet. You will need to use the custom built p5.js or p5.min.js libraries in this repo, or build p5 yourself from source.
+1. I haven't tested if this works with all of the custom camera functions. I think if you put the camera function calls **after** `fbo.begin()` they may work.
 
-2. The rendering format is set to RGBA Unsigned Byte. It should be possible to do float textures, but I haven't looked into it yet.
+2. WebGL1 (which p5 uses) does not support multisampling, so your graphics may be a little more jagged than with default rendering. One solution is to render at 2x resolution, and then scale down when you draw. Or you can try to implement a post processing anti-aliasign shader like FXAA.
 
-3. I haven't tested if this works with all of the custom camera functions. I think if you put the camera function calls **after** `fbo.begin()` they may work.
-
-4. WebGL1 (which p5 uses) does not support multisampling, so your graphics may be a little more jagged than with default rendering. One solution is to render at 2x resolution, and then scale down when you draw. Or you can try to implement a post processing anti-aliasign shader like FXAA.
-
-5. Fbo's render with the y axis flipped by default. When you go to draw the texture, you'll need to unflip it `scale(1, -1)`, unless you use the `.draw()` method in p5Fbo.
+3. Fbo's render with the y axis flipped by default. When you go to draw the texture, you'll need to unflip it `scale(1, -1)`, unless you use the `.draw()` method in p5Fbo.
 
 ## Todo list
 
-- [ ] Float textures (partially implemented, but depends on some changes to p5)
+- [ ] Test all perspective and ortho camera functions
 
 ## Credits
 
