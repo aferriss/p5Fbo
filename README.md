@@ -130,6 +130,7 @@ Draws the fbo to the screen at the same size as your canvas.
 ## Todo list
 
 - [ ] Test all perspective and ortho camera functions
+- [ ] Add a read to pixels function
 
 ## Credits
 
